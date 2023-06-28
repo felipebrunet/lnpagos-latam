@@ -1,5 +1,5 @@
 === LNPagos Latam ===
-Contributors: Felipe Brunet
+Contributors: sandbeach123
 Requires at least: 5.1
 Tested up to: 5.8
 Requires PHP: 7.0
@@ -22,10 +22,7 @@ If you find a bug, or have an idea for improvement, please [file an issue](https
 
 == External services used by this plugin ==
 
-= Buda Link =
-This plugin uses Buda lightning Pay service for creating the invoice.
-https://www.buda.com/link
-
+== Changelog ==
 = v1.0.0 =
 
 * Initial release
@@ -34,6 +31,6 @@ https://www.buda.com/link
 This plugin uses Google Charts API for generating the QR code.
 https://developers.google.com/chart
 
-== Donations to Phaedros original project ==
+== Donate link to Phaedros's original project ==
 
 If you find this plugin useful and would like to donate few sats to support the development, [send some using LNBits](https://legend.lnbits.com/paywall/YHNaeBc4nG2U4u6zyoHmjv)!

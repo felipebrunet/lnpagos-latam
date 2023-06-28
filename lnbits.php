@@ -6,7 +6,10 @@ Plugin URI: https://github.com/felipebrunet/lnpagos-latam
 Description: Cobra en Bitcoin Lightning directo a tu cuenta, sin comisiones.
 Version: 1.0.0
 Author: Felipe Brunet
-Author URI: https://felipebrunet.github.io/ 
+Author URI: https://felipebrunet.github.io/
+License: MIT
+License URI: https://raw.githubusercontent.com/felipebrunet/lnpagos-latam/master/LICENSE
+Text Domain: lnpagos-latam 
 */
 
 
@@ -51,7 +54,7 @@ function render_template($tpl_name, $params) {
 }
 
 
-// Generate lnpagos_payment page, using ./templates/lnpagos_payment.php
+// Generate lnpagos_payment page, using ./templates/payment_page.php
 function lnpagos_payment_shortcode() {
     $check_payment_url = trailingslashit(get_bloginfo('wpurl')) . '?wc-api=wc_gateway_lnpagos';
 
@@ -105,7 +108,7 @@ function lnpagos_init() {
             $this->id = 'lnpagos';
             $this->icon = plugin_dir_url(__FILE__).'assets/lightning.png';
             $this->has_fields = false;
-            $this->method_title = 'BudaLink';
+            $this->method_title = 'LNPagos';
             $this->method_description = 'Reciba pagos en Bitcoin Lightning sin comisiones extra, usando su BudaLink.';
 
             $this->init_form_fields();
@@ -128,7 +131,7 @@ function lnpagos_init() {
          */
         public function admin_options() {
             ?>
-            <h3><?php _e('BudaLink', 'woothemes'); ?></h3>
+            <h3><?php _e('LNPagos', 'woothemes'); ?></h3>
             <p><?php _e('Aceptar Bitcoin al instante mediante BudaLink/Lightning.', 'woothemes'); ?></p>
             <table class="form-table">
                 <?php $this->generate_settings_html(); ?>
