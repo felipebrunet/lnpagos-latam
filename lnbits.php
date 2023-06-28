@@ -7,7 +7,7 @@ Description: Cobra en Bitcoin Lightning directo a tu cuenta, sin comisiones.
 Version: 1.0.0
 Author: Felipe Brunet
 Author URI: https://felipebrunet.github.io/
-License: MIT
+License: GPL v3
 License URI: https://raw.githubusercontent.com/felipebrunet/lnpagos-latam/master/LICENSE
 Text Domain: lnpagos-latam 
 */
