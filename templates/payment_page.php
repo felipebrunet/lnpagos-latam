@@ -8,4 +8,4 @@
 <p class="has-text-align-center">Después de pagar con tu billetera, serás automáticamente redirigido.</p>
 <!-- /wp:paragraph -->
 
-<!-- wp:shortcode -->[lnbuda_payment_shortcode]<!-- /wp:shortcode -->
+<!-- wp:shortcode -->[lnpagos_payment_shortcode]<!-- /wp:shortcode -->
