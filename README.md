@@ -1,4 +1,4 @@
-# LNPay Latam
+# LNPagos Latam
 Plugin Wordpress para recibir pagos en Bitcoin Lightning directo a cuenta Buda del vendedor.
 
 This plugin is a miserable fork of the Phaedros's awesome plugin for LNBits payments. All credit goes to him for this project!

@@ -1,5 +1,5 @@
 <?php
-namespace LNBudaPlugin;
+namespace LNPagosPlugin;
 
 // use OpenNode\OpenNode;
 // use OpenNode\Merchant;
@@ -8,13 +8,11 @@ namespace LNBudaPlugin;
 
 
 /**
- * For calling LNBuda API
+ * For calling LNPagos API
  */
 
-class LNBudaAPI {
+class LNPagosAPI {
 
-    // protected $buda_url_get = 'https://www.buda.com/api/v2/pay/';
-    // protected $buda_url_check = 'https://realtime.buda.com/sub?channel=lightninginvoices%40';
     protected $user_name;
 
     public function __construct($user_name) {

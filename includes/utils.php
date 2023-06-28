@@ -1,5 +1,5 @@
 <?php
-namespace LNBudaPlugin;
+namespace LNPagosPlugin;
 
 
 class Utils {

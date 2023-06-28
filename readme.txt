@@ -1,4 +1,4 @@
-=== LNPay Latam ===
+=== LNPagos Latam ===
 Contributors: Felipe Brunet
 Requires at least: 5.1
 Tested up to: 5.8
