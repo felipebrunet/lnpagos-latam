@@ -20,7 +20,6 @@ define('LNPAGOS_PAYMENT_PAGE_SLUG', 'lnpagos_payment');
 
 require_once(__DIR__ . '/includes/init.php');
 
-use LNPagosPlugin\Utils;
 use LNPagosPlugin\LNPagosAPI;
 
 

@@ -1,41 +1,6 @@
 <?php
 namespace LNPagosPlugin;
 
-
-class Utils {
-    public static function convert_to_satoshis($amount, $currency) {
-        if(strtolower($currency) !== 'btc') {
-            $currency = strtoupper($currency);
-            error_log($amount . " " . $currency);
-            $c    = new CurlWrapper();
-            $resp = $c->get('https://api.opennode.co/v1/rates', array(), array());
-
-            if ($resp['status'] != 200) {
-                throw new \Exception('Opennode.co request for currency conversion failed. Got status ' . $resp['status']);
-            }
-
-            if(!isset($resp['response']['data'])) {
-                throw new \Exception('Opennode.co request for currency conversion failed. Got bad response.');
-            }
-
-             if(!isset($resp['response']['data']['BTC' . $currency])) {
-                throw new \Exception('Opennode.co request for currency conversion failed. Your currency was not found in the response.');
-            }
-
-            if(!isset($resp['response']['data']['BTC' . $currency][$currency])) {
-                throw new \Exception('Opennode.co request for currency conversion failed. An unexpected error has occurred.');
-            }
-
-            $price = $resp['response']['data']['BTC' . $currency][$currency];
-
-            return (int) round(($amount / $price) * 100000000);
-        }
-        else {
-            return intval($amount * 100000000);
-        }
-    }
-}
-
 class CurlWrapper {
 
     
