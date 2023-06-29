@@ -1,5 +1,6 @@
 <div class="qr_invoice" id="qr_invoice">
 	<img src="<?php echo esc_url("https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=".$invoice."&choe=UTF-8") ?>"/><br/>
+	<p><?php echo $order_detail ?></p>
 	<textarea id="invoice_text"><?php echo esc_textarea($invoice) ?></textarea>
 </div>
 

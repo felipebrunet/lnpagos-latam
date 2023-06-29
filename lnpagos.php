@@ -61,16 +61,19 @@ function lnpagos_payment_shortcode() {
         $order_id = absint($_REQUEST['order_id']);
         $order = wc_get_order($order_id);
         $invoice = $order->get_meta("buda_invoice");
+        $order_detail = $order->get_meta("order_detail");
         $success_url = $order->get_checkout_order_received_url();
     } else {
         // Likely when editting page with this shortcode, use dummy order.
         $order_id = 1;
         $invoice = "lnbc0000";
+        $order_detail = "lnbc0000";
         $success_url = "/dummy-success";
     }
 
     $template_params = array(
         "invoice" => $invoice,
+        "order_detail" => $order_detail,
         "check_payment_url" => $check_payment_url,
         'order_id' => $order_id,
         'success_url' => $success_url
@@ -193,7 +196,9 @@ function lnpagos_init() {
             $order = wc_get_order($order_id);
 
             // This will be stored in the Lightning invoice (ie. can be used to match orders in LNPagos)
-            $memo = "WordPress Order= ".$order->get_id()." Total= ".$order->get_total().get_woocommerce_currency();
+
+            // $memo = "Bitpointburger Order= ".$order->get_id()." Total= ".$order->get_total().get_woocommerce_currency();
+            $memo = "Bitpoint Burger Orden ".$order->get_id().".";
 
             // TODO convert any currency to the currency of the company
             $amount = $order->get_total();
@@ -209,8 +214,14 @@ function lnpagos_init() {
             $r = $this->api->createInvoice($amount, $memo);
 
             if ($r['status'] == 200) {
+
+                error_log("LNPagos API failure. Status=".$r['status']);
+                error_log(print_r($r['response'], true));
                 $resp = $r['response'];
                 $order->add_meta_data('buda_invoice', $resp['encoded_payment_request'], true);
+                // $order->add_meta_data('buda_invoice', $resp['memo'], true);
+                $order->add_meta_data('order_detail', $resp['memo'], true);
+
                 $order->add_meta_data('buda_payment_id', $resp['id'], true);
                 $order->save();
 
