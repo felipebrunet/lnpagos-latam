@@ -208,7 +208,7 @@ function lnpagos_init() {
             // }
             $r = $this->api->createInvoice($amount, $memo);
 
-            if ($r['status'] == 200 || $r['status'] == 201) {
+            if ($r['status'] == 200) {
                 $resp = $r['response'];
                 $order->add_meta_data('buda_invoice', $resp['encoded_payment_request'], true);
                 $order->add_meta_data('buda_payment_id', $resp['id'], true);
@@ -243,7 +243,7 @@ function lnpagos_init() {
             $payment_id = $order->get_meta('buda_payment_id');
             $r = $this->api->checkInvoicePaid($payment_id);
 
-            if ($r['status'] == 200 || $r['status'] == 201) {
+            if ($r['status'] == 200) {
                 $order->add_order_note('Payment is settled and has been credited to your Buda account. Purchased goods/services can be securely delivered to the customer.');
                 $order->payment_complete();
                 $order->save();
