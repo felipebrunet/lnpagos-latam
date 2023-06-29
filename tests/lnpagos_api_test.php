@@ -2,7 +2,7 @@
 
 require_once(dirname(__DIR__) . '/includes/init.php');
 
-use LNBitsPlugin\LNBitsAPI;
+use LNPagosPlugin\LNPagosAPI;
 
 
 // add_action( 'http_api_debug', 'http_call_debug', 10, 5 );
