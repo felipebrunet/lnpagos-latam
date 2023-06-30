@@ -27,6 +27,7 @@ class CurlWrapper {
     }
 
     public function getBuda($url, $params) {
+        // error_log("Request es: ".$url);
         return $this->simpleBudaRequest('GET', $url, $params);
     }
 
