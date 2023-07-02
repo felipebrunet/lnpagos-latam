@@ -11,18 +11,18 @@
 	var order_id = <?php echo esc_attr($order_id) ?>;
 
 	// Periodically check if the invoice got paid
-	setInterval(function() {
-		$.post(check_payment_url, {'order_id': order_id}).done(function(data) {
-			var response = $.parseJSON(data);
 
-			console.log(response);
-
-			if (response['paid']) {
-				window.location.replace(response['redirect']);
-			}
-		});
-
-	}, 5000);
+	if ($invoice != 'lnbc0000' ) {
+		setInterval(function() {
+			$.post(check_payment_url, {'order_id': order_id}).done(function(data) {
+				var response = $.parseJSON(data);
+				console.log(response);
+				if (response['paid']) {
+					window.location.replace(response['redirect']);
+				}
+			});
+		}, 5000);
+	}
 
 	// Copy into clipboard on click
 	$('#qr_invoice').click(function() {

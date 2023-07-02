@@ -219,10 +219,9 @@ function lnpagos_init() {
                 error_log(print_r($r['response'], true));
                 $resp = $r['response'];
                 $order->add_meta_data('buda_invoice', $resp['encoded_payment_request'], true);
-                // $order->add_meta_data('buda_invoice', $resp['memo'], true);
+                $order->add_meta_data('buda_payment_id', $resp['id'], true);
                 $order->add_meta_data('order_detail', $resp['memo'], true);
 
-                $order->add_meta_data('buda_payment_id', $resp['id'], true);
                 $order->save();
 
                 // TODO: configurable payment page slug
@@ -252,6 +251,7 @@ function lnpagos_init() {
         public function check_payment() {
             $order = wc_get_order($_REQUEST['order_id']);
             $payment_id = $order->get_meta('buda_payment_id');
+            // $payment_id = 'iiii';
             $r = $this->api->checkInvoicePaid($payment_id);
 
             if ($r['status'] == 200) {
