@@ -3,7 +3,7 @@ Contributors: sandbeach123
 Requires at least: 5.1
 Tested up to: 5.8
 Requires PHP: 7.0
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPL v3
 License URI: https://raw.githubusercontent.com/felipebrunet/lnpagos-latam/master/LICENSE
 Tags: bitcoin, lightning, buda, lightning network, accept bitcoin, accept lightning, instant bitcoin, bitcoin processor, bitcoin gateway, payment gateway, payment module, bitcoin module, bitcoin woocommerce, btc
