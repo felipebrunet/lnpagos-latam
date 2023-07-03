@@ -121,7 +121,10 @@ function lnpagos_init() {
 
 
             $user_name = $this->get_option('buda_user_name');
-            $this->api = new LNPagosAPI($user_name);
+            $api_key = $this->get_option('buda_api_key');
+            $api_secret = $this->get_option('buda_api_secret');
+
+            $this->api = new LNPagosAPI($user_name, $api_key, $api_secret);
 
             add_action('woocommerce_update_options_payment_gateways_'.$this->id, array($this, 'process_admin_options'));
             add_action('woocommerce_thankyou_'.$this->id, array($this, 'thankyou'));
@@ -172,6 +175,18 @@ function lnpagos_init() {
                     'type' => 'text',
                     'description' => __('Tu nombre de usuario en Buda para BudaLink. Obten el tuyo en <a href="https://www.buda.com/link" target="_blank">aquí</a>.', 'woocommerce'),
                     'default' => '',
+                ),
+                'buda_api_key' => array(
+                    'title' => __('Api Key Buda', 'woocommerce'),
+                    'type' => 'text',
+                    'description' => __('Api Key de tu cuenta en Buda.', 'woocommerce'),
+                    'default' => '',
+                ),
+                'buda_api_secret' => array(
+                    'title' => __('Api Secret Buda', 'woocommerce'),
+                    'type' => 'text',
+                    'description' => __('Api Secret de tu cuenta en Buda.', 'woocommerce'),
+                    'default' => '',
               ),
             );
         }
@@ -197,26 +212,15 @@ function lnpagos_init() {
 
             // This will be stored in the Lightning invoice (ie. can be used to match orders in LNPagos)
 
-            // $memo = "Bitpointburger Order= ".$order->get_id()." Total= ".$order->get_total().get_woocommerce_currency();
             $memo = "Bitpoint Burger Orden ".$order->get_id().".";
 
             // TODO convert any currency to the currency of the company
             $amount = $order->get_total();
-            
-            // Call LNPagos server to create invoice
-            // Expected 201
-            // {
-            //  "checking_id": "e0dfcde5ff9708d71e5947c86b9d46cc230fd0f16e0a5f03b00ac97f0b23e684", 
-            //  "lnurl_response": null, 
-            //  "payment_id": "e0dfcde5ff9708d71e5947c86b9d46cc230fd0f16e0a5f03b00ac97f0b23e684", 
-            //  "payment_request": "..."
-            // }
+
             $r = $this->api->createInvoice($amount, $memo);
 
             if ($r['status'] == 200) {
 
-                error_log("LNPagos API failure. Status=".$r['status']);
-                error_log(print_r($r['response'], true));
                 $resp = $r['response'];
                 $order->add_meta_data('buda_invoice', $resp['encoded_payment_request'], true);
                 $order->add_meta_data('buda_payment_id', $resp['id'], true);
@@ -232,8 +236,8 @@ function lnpagos_init() {
                     "redirect" => $redirect_url
                 );
             } else {
-                error_log("LNPagos API failure. Status=".$r['status']);
-                error_log(print_r($r['response'], true));
+                // error_log("LNPagos API failure. Status=".$r['status']);
+                // error_log(print_r($r['response'], true));
                 return array(
                     "result" => "failure",
                     "messages" => array("Failed to create Buda invoice.")
@@ -255,10 +259,14 @@ function lnpagos_init() {
             $r = $this->api->checkInvoicePaid($payment_id);
 
             if ($r['status'] == 200) {
+
+                // error_log("LNPagos final API failure. Status=".$r['status']);
+                // error_log(print_r($r['response'], true));
+
                 $order->add_order_note('Payment is settled and has been credited to your Buda account. Purchased goods/services can be securely delivered to the customer.');
                 $order->payment_complete();
                 $order->save();
-                error_log("PAID");
+                // error_log("PAID");
                 echo(json_encode(array(
                     'result' => 'success',
                     'redirect' => $order->get_checkout_order_received_url(),

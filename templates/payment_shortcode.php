@@ -12,8 +12,7 @@
 
 	// Periodically check if the invoice got paid
 
-	if ($invoice != 'lnbc0000' ) {
-		setInterval(function() {
+	setInterval(function() {
 			$.post(check_payment_url, {'order_id': order_id}).done(function(data) {
 				var response = $.parseJSON(data);
 				console.log(response);
@@ -22,7 +21,6 @@
 				}
 			});
 		}, 5000);
-	}
 
 	// Copy into clipboard on click
 	$('#qr_invoice').click(function() {
