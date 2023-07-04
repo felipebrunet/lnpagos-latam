@@ -4,7 +4,7 @@
 Plugin Name: LNPagos Latam
 Plugin URI: https://github.com/felipebrunet/lnpagos-latam
 Description: Cobra en Bitcoin Lightning directo a tu cuenta, sin comisiones.
-Version: 1.1.0
+Version: 1.1.1
 Author: Felipe Brunet
 Author URI: https://felipebrunet.github.io/
 License: GPL v3

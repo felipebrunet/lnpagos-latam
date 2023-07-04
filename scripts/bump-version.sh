@@ -17,3 +17,4 @@ git commit -m "Bump version to $new_version"
 git tag "v$new_version"
 
 git push origin --tags
+git push
