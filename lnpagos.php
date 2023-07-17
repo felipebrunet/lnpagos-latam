@@ -3,8 +3,8 @@
 /*
 Plugin Name: LNPagos Latam
 Plugin URI: https://github.com/felipebrunet/lnpagos-latam
-Description: Cobra en Bitcoin Lightning directo a tu cuenta, sin comisiones.
-Version: 1.2.0
+Description: Cobra en Bitcoin Lightning directo a tu cuenta Buda.com, sin comisiones.
+Version: 1.3.0
 Author: Felipe Brunet
 Author URI: https://felipebrunet.github.io/
 License: GPL v3
@@ -111,7 +111,7 @@ function lnpagos_init() {
             $this->icon = plugin_dir_url(__FILE__).'assets/lightning.png';
             $this->has_fields = false;
             $this->method_title = 'LNPagos';
-            $this->method_description = 'Reciba pagos en Bitcoin Lightning sin comisiones extra, usando su BudaLink.';
+            $this->method_description = 'Reciba pagos en Bitcoin Lightning sin comisiones extra, usando su cuenta en Buda.';
 
             $this->init_form_fields();
             $this->init_settings();
@@ -120,11 +120,10 @@ function lnpagos_init() {
             $this->description = $this->get_option('description');
 
 
-            $user_name = $this->get_option('buda_user_name');
             $api_key = $this->get_option('buda_api_key');
             $api_secret = $this->get_option('buda_api_secret');
 
-            $this->api = new LNPagosAPI($user_name, $api_key, $api_secret);
+            $this->api = new LNPagosAPI($api_key, $api_secret);
 
             add_action('woocommerce_update_options_payment_gateways_'.$this->id, array($this, 'process_admin_options'));
             add_action('woocommerce_thankyou_'.$this->id, array($this, 'thankyou'));
@@ -137,7 +136,7 @@ function lnpagos_init() {
         public function admin_options() {
             ?>
             <h3><?php _e('LNPagos', 'woothemes'); ?></h3>
-            <p><?php _e('Aceptar Bitcoin al instante mediante BudaLink/Lightning.', 'woothemes'); ?></p>
+            <p><?php _e('Aceptar Bitcoin al instante mediante BTC Lightning en Buda.', 'woothemes'); ?></p>
             <table class="form-table">
                 <?php $this->generate_settings_html(); ?>
             </table>
@@ -153,7 +152,7 @@ function lnpagos_init() {
             $this->form_fields = array(
                 'enabled' => array(
                     'title' => __('Habilitar pagos con Lightning', 'woocommerce'),
-                    'label' => __('Habilitar pagos con BTC Lightning via BudaLink', 'woocommerce'),
+                    'label' => __('Habilitar pagos con BTC Lightning via Buda', 'woocommerce'),
                     'type' => 'checkbox',
                     'description' => '',
                     'default' => 'no',
@@ -161,25 +160,19 @@ function lnpagos_init() {
                 'title' => array(
                     'title' => __('Título', 'woocommerce'),
                     'type' => 'text',
-                    'description' => __('The payment method title which a customer sees at the checkout of your store.', 'woocommerce'),
-                    'default' => __('Paga con Bitcoin Lightning', 'woocommerce'),
+                    'description' => __('Nombre del método de pago que el cliente verá en el checkout.', 'woocommerce'),
+                    'default' => __('Bitcoin Lightning', 'woocommerce'),
                 ),
                 'description' => array(
                     'title' => __('Descripción', 'woocommerce'),
                     'type' => 'textarea',
-                    'description' => __('The payment method description which a customer sees at the checkout of your store.', 'woocommerce'),
-                    'default' => __('Puedes usar cualquier billetera lightning para pagar.'),
-                ),
-                'buda_user_name' => array(
-                    'title' => __('Nombre de usuario Buda Link', 'woocommerce'),
-                    'type' => 'text',
-                    'description' => __('Tu nombre de usuario en Buda para BudaLink. Obten el tuyo en <a href="https://www.buda.com/link" target="_blank">aquí</a>.', 'woocommerce'),
-                    'default' => '',
+                    'description' => __('La descripción del método de pago que el cliente verá en el checkout.', 'woocommerce'),
+                    'default' => __('Puedes usar cualquier billetera de Bitcoin Lightning para pagar.'),
                 ),
                 'buda_api_key' => array(
                     'title' => __('Api Key Buda', 'woocommerce'),
                     'type' => 'text',
-                    'description' => __('Api Key de tu cuenta en Buda.', 'woocommerce'),
+                    'description' => __('Api Key de tu cuenta en Buda. Por seguridad se recomienda generar Api Key/Secret con privilegios reducidos (Sólo generar órdenes).', 'woocommerce'),
                     'default' => '',
                 ),
                 'buda_api_secret' => array(

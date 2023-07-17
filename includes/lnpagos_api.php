@@ -7,14 +7,12 @@ namespace LNPagosPlugin;
 
 class LNPagosAPI {
 
-    protected $user_name;
     protected $api_key;
     protected $api_secret;
 
-    public function __construct($user_name, $api_key, $api_secret) {
+    public function __construct($api_key, $api_secret) {
         $this->buda_url_get = 'https://www.buda.com';
         $this ->buda_url_check = 'https://realtime.buda.com';
-        $this->user_name = $user_name;
         $this->api_key = $api_key;
         $this->api_secret = $api_secret;
     }    
