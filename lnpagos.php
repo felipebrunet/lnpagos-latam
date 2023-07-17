@@ -4,7 +4,7 @@
 Plugin Name: LNPagos Latam
 Plugin URI: https://github.com/felipebrunet/lnpagos-latam
 Description: Cobra en Bitcoin Lightning directo a tu cuenta, sin comisiones.
-Version: 1.1.1
+Version: 1.2.0
 Author: Felipe Brunet
 Author URI: https://felipebrunet.github.io/
 License: GPL v3
@@ -211,17 +211,16 @@ function lnpagos_init() {
             $order = wc_get_order($order_id);
 
             // This will be stored in the Lightning invoice (ie. can be used to match orders in LNPagos)
-
-            $memo = "Bitpoint Burger Orden ".$order->get_id().".";
-
             // TODO convert any currency to the currency of the company
+
             $amount = $order->get_total();
+            $currency = get_woocommerce_currency();
+            $memo = "Orden ".$order->get_id().". Total a pagar: ".get_woocommerce_currency()." $".$order->get_total();
+            $r = $this->api->createInvoice($amount, $currency, $memo);
 
-            $r = $this->api->createInvoice($amount, $memo);
+            if ($r['status'] == 200 || $r['status'] == 201) {
 
-            if ($r['status'] == 200) {
-
-                $resp = $r['response'];
+                $resp = $r['response']['invoice'];
                 $order->add_meta_data('buda_invoice', $resp['encoded_payment_request'], true);
                 $order->add_meta_data('buda_payment_id', $resp['id'], true);
                 $order->add_meta_data('order_detail', $resp['memo'], true);
@@ -236,8 +235,8 @@ function lnpagos_init() {
                     "redirect" => $redirect_url
                 );
             } else {
-                // error_log("LNPagos API failure. Status=".$r['status']);
-                // error_log(print_r($r['response'], true));
+                error_log("LNPagos API failure. Status=".$r['status']);
+                error_log(print_r($r['response'], true));
                 return array(
                     "result" => "failure",
                     "messages" => array("Failed to create Buda invoice.")

@@ -19,21 +19,30 @@ class LNPagosAPI {
         $this->api_secret = $api_secret;
     }    
 
-    public function createInvoice($amount, $memo) {
+    public function createInvoice($amount, $currency, $memo) {
         $mt = explode(' ', microtime(false));
         $nonce = strval($mt[1]) . strval( $mt[0]* 1000000 );
-        $route = '/api/v2/pay/' . $this->user_name . '/invoice?amount=' . $amount;
-        $msg_firmar = strval('GET' . ' ' . $route . ' ' . $nonce);
+        $route = '/api/v2/lightning_network_invoices';
+
+        $data = array(
+            "amount" => $amount,
+            "currency" => $currency,
+            "memo" => $memo
+        );
+
+        $msg_firmar = strval('POST' . ' ' . $route . ' ' . base64_encode(json_encode($data)) . ' ' . $nonce);
+
         $signature = hash_hmac('sha384', $msg_firmar, $this->api_secret);
         $c = new CurlWrapper();
+
         $headers = array (
             'X-SBTC-APIKEY' => $this->api_key,
             'X-SBTC-NONCE' => $nonce,
             'X-SBTC-SIGNATURE' => $signature,
+            'Content-Type' => 'application/json',
         );
-        // error_log(print_r($headers, true));
-        // error_log(print_r($signature, true));
-        return $c->getBuda( $this->buda_url_get . $route, array(), $headers );
+
+        return $c->postBuda( $this->buda_url_get . $route, array(), $headers, $data);
     }
 
     public function checkInvoicePaid($payment_id) {

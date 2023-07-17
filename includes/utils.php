@@ -5,11 +5,14 @@ class CurlWrapper {
 
     
     // Buda new functions
-    private function simpleBudaRequest($method, $url, $params, $headers) {
+    private function simpleBudaRequest($method, $url, $params, $headers, $data) {
         $url = add_query_arg($params, $url);
+        $aco = $data ? json_encode($data)  : '';
+
         $r = wp_remote_request($url, array(
             'method' => $method,
-            'headers' => $headers
+            'headers' => $headers, 
+            'body' => $data ? json_encode($data)  : ''
         ));
 
         if (is_wp_error($r)) {
@@ -27,7 +30,11 @@ class CurlWrapper {
     }
 
     public function getBuda($url, $params, $headers) {
-        // error_log(print_r($url, true));
-        return $this->simpleBudaRequest('GET', $url, $params, $headers);
+        return $this->simpleBudaRequest('GET', $url, $params, $headers, null);
     }
+
+    public function postBuda($url, $params, $headers, $data) {
+        return $this->simpleBudaRequest('POST', $url, $params, $headers, $data);
+    }
+
 }
