@@ -4,7 +4,7 @@
 Plugin Name: LNPagos Latam
 Plugin URI: https://github.com/felipebrunet/lnpagos-latam
 Description: Cobra en Bitcoin Lightning directo a tu cuenta Buda.com, sin comisiones.
-Version: 1.3.0
+Version: 1.4.0
 Author: Felipe Brunet
 Author URI: https://felipebrunet.github.io/
 License: GPL v3
@@ -21,7 +21,7 @@ define('LNPAGOS_PAYMENT_PAGE_SLUG', 'lnpagos_payment');
 require_once(__DIR__ . '/includes/init.php');
 
 use LNPagosPlugin\LNPagosAPI;
-
+use LNPagosPlugin\Utils;
 
 
 function woocommerce_lnpagos_activate() {
@@ -206,10 +206,23 @@ function lnpagos_init() {
             // This will be stored in the Lightning invoice (ie. can be used to match orders in LNPagos)
             // TODO convert any currency to the currency of the company
 
+            
+            // Old method
             $amount = $order->get_total();
+            
+                        // New method with unlimited amount
+            $amountsats = Utils::convert_to_satoshis($order->get_total(), get_woocommerce_currency());
+            
+            
+            
             $currency = get_woocommerce_currency();
             $memo = "Orden ".$order->get_id().". Total a pagar: ".get_woocommerce_currency()." $".$order->get_total();
-            $r = $this->api->createInvoice($amount, $currency, $memo);
+            
+            // Old way with fiat amount
+            // $r = $this->api->createInvoice($amount, $currency, $memo);
+            
+            // New way with satoshis
+            $r = $this->api->createInvoice($amountsats, $currency, $memo);
 
             if ($r['status'] == 200 || $r['status'] == 201) {
 

@@ -22,9 +22,17 @@ class LNPagosAPI {
         $nonce = strval($mt[1]) . strval( $mt[0]* 1000000 );
         $route = '/api/v2/lightning_network_invoices';
 
+        // Old way
+        // $data = array(
+        //     "amount" => $amount,
+        //     "currency" => $currency,
+        //     "memo" => $memo
+        // );
+
+        // New way with satoshis and no limit
         $data = array(
-            "amount" => $amount,
-            "currency" => $currency,
+            "amount_satoshis" => $amount,
+            "currency" => "BTC",
             "memo" => $memo
         );
 
