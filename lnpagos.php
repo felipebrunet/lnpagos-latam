@@ -4,7 +4,7 @@
 Plugin Name: LNPagos Latam
 Plugin URI: https://github.com/felipebrunet/lnpagos-latam
 Description: Cobra en Bitcoin Lightning directo a tu cuenta Buda.com, sin comisiones.
-Version: 1.5.0
+Version: 1.6.0
 Author: Felipe Brunet
 Author URI: https://felipebrunet.github.io/
 License: GPL v3
@@ -62,7 +62,6 @@ function lnpagos_payment_shortcode() {
         $order = wc_get_order($order_id);
         $invoice = $order->get_meta("buda_invoice");
         $alts_btc_enabled = $order->get_meta("alts_btc_enabled");
-        $alts_xmr_enabled = $order->get_meta("alts_xmr_enabled");
         $order_detail = $order->get_meta("order_detail");
         $success_url = $order->get_checkout_order_received_url();
     } else {
@@ -78,7 +77,6 @@ function lnpagos_payment_shortcode() {
         "order_detail" => $order_detail,
         "check_payment_url" => $check_payment_url,
         "alts_btc_enabled" => $alts_btc_enabled,
-        "alts_xmr_enabled" => $alts_xmr_enabled,
         'order_id' => $order_id,
         'success_url' => $success_url
     );
@@ -190,12 +188,6 @@ function lnpagos_init() {
                 'type' => 'checkbox',
                 'description' => __('Selecciona esta opción para habilitar que el cliente pueda pagar con Bitcoin Onchain, convirtiendola instantáneamente en Bitcoin Lightning.', 'woocommerce'),
                 'default' => 'no',
-                ),
-                'alts_xmr_enabled' => array(
-                'title' => __('Habilitar Monero (XMR)', 'woocommerce'),
-                'type' => 'checkbox',
-                'description' => __('Selecciona esta opción para habilitar que el cliente pueda pagar con Monero (XMR), convirtiendola instantáneamente en Bitcoin Lightning.', 'woocommerce'),
-                'default' => 'no',
               ),
             );
         }
@@ -246,7 +238,6 @@ function lnpagos_init() {
                 $order->add_meta_data('buda_invoice', $resp['encoded_payment_request'], true);
                 $order->add_meta_data('buda_payment_id', $resp['id'], true);
                 $order->add_meta_data('alts_btc_enabled', $this->get_option('alts_btc_enabled'), true);
-                $order->add_meta_data('alts_xmr_enabled', $this->get_option('alts_xmr_enabled'), true);
                 $order->add_meta_data('order_detail', $resp['memo'], true);
                 $order->save();
 

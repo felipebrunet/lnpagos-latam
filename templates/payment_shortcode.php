@@ -8,7 +8,6 @@
 	<ul class="aco">
 		<li><a href="#tabs-1">Bitcoin Lightning</a></li>
 		<li class="alts-btc"><a href="#tabs-2">Bitcoin Onchain</a></li>
-		<li class="alts-xmr"><a href="#tabs-3">Monero</a></li>
 	</ul>
 		
 	<div id="tabs-1">
@@ -25,12 +24,6 @@
 		<p><?php echo $order_detail ?></p>
 		<br>
 		<iframe width="320" height="740" src="<?php echo esc_url("https://widget.fixedfloat.com/?from=BTC&to=BTCLN&lockSend=true&lockReceive=true&address=".$invoice."&lockAddress=true&type=float") ?>"></iframe>
-	</div>
-
-	<div id="tabs-3">
-		<p><?php echo $order_detail ?></p>
-		<br>
-		<iframe width="320" height="740" src="<?php echo esc_url("https://widget.fixedfloat.com/?from=XMR&to=BTCLN&lockSend=true&lockReceive=true&address=".$invoice."&lockAddress=true&type=float") ?>"></iframe>
 	</div>
 
 
@@ -82,12 +75,6 @@
 
 	.alts-btc {
 		<?php if ($alts_btc_enabled == "no") { ?>
-		display: None;
-		<?php } ?>
-	} 
-
-	.alts-xmr {
-		<?php if ($alts_xmr_enabled == "no") { ?>
 		display: None;
 		<?php } ?>
 	} 
