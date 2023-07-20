@@ -1,11 +1,42 @@
-<div class="qr_invoice" id="qr_invoice">
-	<img src="<?php echo esc_url("https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=".$invoice."&choe=UTF-8") ?>"/><br/>
-	<p><?php echo $order_detail ?></p>
-	<textarea readonly id="invoice_text"><?php echo esc_textarea($invoice) ?></textarea>
-	<br>
-	<button id='invoice_copy_button'>Copiar Lightning Invoice</button>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+
+
+<div class="wrapper" id="tabs">
+	<ul class="aco">
+		<li><a href="#tabs-1">Bitcoin Lightning</a></li>
+		<li class="alts-btc"><a href="#tabs-2">Bitcoin Onchain</a></li>
+		<li class="alts-xmr"><a href="#tabs-3">Monero</a></li>
+	</ul>
+		
+	<div id="tabs-1">
+		<div class="qr_invoice" id="qr_invoice">
+			<img src="<?php echo esc_url("https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=".$invoice."&choe=UTF-8") ?>"/><br/>
+			<p><?php echo $order_detail ?></p>
+			<textarea readonly id="invoice_text"><?php echo esc_textarea($invoice) ?></textarea>
+			<br>
+			<button id='invoice_copy_button'>Copiar Lightning Invoice</button>
+		</div>
+	</div>
+
+	<div id="tabs-2">
+		<p><?php echo $order_detail ?></p>
+		<br>
+		<iframe width="320" height="740" src="<?php echo esc_url("https://widget.fixedfloat.com/?from=BTC&to=BTCLN&lockSend=true&lockReceive=true&address=".$invoice."&lockAddress=true&type=float") ?>"></iframe>
+	</div>
+
+	<div id="tabs-3">
+		<p><?php echo $order_detail ?></p>
+		<br>
+		<iframe width="320" height="740" src="<?php echo esc_url("https://widget.fixedfloat.com/?from=XMR&to=BTCLN&lockSend=true&lockReceive=true&address=".$invoice."&lockAddress=true&type=float") ?>"></iframe>
+	</div>
+
+
 </div>
 
+      
 <script type="text/javascript">
 	var $ = jQuery;
 	var check_payment_url = '<?php echo esc_url($check_payment_url) ?>';
@@ -28,6 +59,11 @@
 		document.execCommand('copy');
 		// alert("Lightning invoice copiado");
 	});
+
+	$( function() {
+		$( "#tabs" ).tabs();
+	} );
+
 	
 </script>
 
@@ -35,4 +71,29 @@
 	div.qr_invoice {
 	 text-align:center
 	}
+	.wrapper {
+            text-align: center;
+	}
+	.wrapper ul {
+		display: inline-block;
+		margin: 0;
+		padding: 0;
+	}
+
+	.alts-btc {
+		<?php if ($alts_btc_enabled == "no") { ?>
+		display: None;
+		<?php } ?>
+	} 
+
+	.alts-xmr {
+		<?php if ($alts_xmr_enabled == "no") { ?>
+		display: None;
+		<?php } ?>
+	} 
+
+
+
+
+
 </style>
