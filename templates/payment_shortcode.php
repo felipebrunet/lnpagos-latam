@@ -13,7 +13,7 @@
 	<div id="tabs-1">
 		<div class="qr_invoice" id="qr_invoice">
 			<img src="<?php echo esc_url("https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=".$invoice."&choe=UTF-8") ?>"/><br/>
-			<p><?php echo $order_detail ?></p>
+			<p><?php echo esc_attr($order_detail) ?></p>
 			<textarea readonly id="invoice_text"><?php echo esc_textarea($invoice) ?></textarea>
 			<br>
 			<button id='invoice_copy_button'>Copiar Lightning Invoice</button>
@@ -21,7 +21,7 @@
 	</div>
 
 	<div id="tabs-2">
-		<p><?php echo $order_detail ?></p>
+		<p><?php echo esc_attr($order_detail) ?></p>
 		<br>
 		<iframe width="320" height="740" src="<?php echo esc_url("https://widget.fixedfloat.com/?from=BTC&to=BTCLN&lockSend=true&lockReceive=true&address=".$invoice."&lockAddress=true&type=float") ?>"></iframe>
 	</div>

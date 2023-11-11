@@ -1,9 +1,9 @@
 === LNPagos Latam ===
 Contributors: sandbeach123
 Requires at least: 5.1
-Tested up to: 5.8
+Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 1.7.0
+Stable tag: 1.8.0
 License: GPL v3
 License URI: https://raw.githubusercontent.com/felipebrunet/lnpagos-latam/master/LICENSE
 Tags: bitcoin, lightning, buda, lightning network, accept bitcoin, accept lightning, instant bitcoin, bitcoin processor, bitcoin gateway, payment gateway, payment module, bitcoin module, bitcoin woocommerce, btc
@@ -23,8 +23,14 @@ If you find a bug, or have an idea for improvement, please [file an issue](https
 == External services used by this plugin ==
 
 == Changelog ==
-= v1.0.0 =
 
+= v1.8.0 =
+* Minor Fixes before publishing. 
+
+= v1.7.0 =
+* New options added for onchain payments
+
+= v1.0.0 =
 * Initial release
 
 = Google Charts =

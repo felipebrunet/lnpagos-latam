@@ -1,10 +1,10 @@
 <?php
 
 /*
-Plugin Name: LNPagos Latam2
+Plugin Name: LNPagos Latam
 Plugin URI: https://github.com/felipebrunet/lnpagos-latam
 Description: Cobra en Bitcoin Lightning directo a tu cuenta Buda.com, sin comisiones.
-Version: 1.7.0
+Version: 1.8.0
 Author: Felipe Brunet
 Author URI: https://felipebrunet.github.io/
 License: GPL v3
@@ -280,13 +280,13 @@ function lnpagos_init() {
                 $order->payment_complete();
                 $order->save();
                 // error_log("PAID");
-                echo(json_encode(array(
+                echo(wp_json_encode(array(
                     'result' => 'success',
                     'redirect' => $order->get_checkout_order_received_url(),
                     'paid' => true
                 )));
             } else {
-                echo(json_encode(array(
+                echo(wp_json_encode(array(
                     'result' => 'failure',
                     'paid' => false,
                     'messages' => array('Request to Buda failed.')
