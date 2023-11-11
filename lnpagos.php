@@ -1,7 +1,7 @@
 <?php
 
 /*
-Plugin Name: LNPagos Latam
+Plugin Name: LNPagos Latam2
 Plugin URI: https://github.com/felipebrunet/lnpagos-latam
 Description: Cobra en Bitcoin Lightning directo a tu cuenta Buda.com, sin comisiones.
 Version: 1.7.0
