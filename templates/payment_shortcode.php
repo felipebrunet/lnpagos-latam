@@ -12,7 +12,7 @@
 		
 	<div id="tabs-1">
 		<div class="qr_invoice" id="qr_invoice">
-			<img src="<?php echo esc_url("https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=".$invoice."&choe=UTF-8") ?>"/><br/>
+			<img src="<?php echo esc_url("https://quickchart.io/chart?cht=qr&chld=H%7C1&chs=300x300&chl=".$invoice) ?>"/><br/>
 			<p><?php echo esc_attr($order_detail) ?></p>
 			<textarea readonly id="invoice_text"><?php echo esc_textarea($invoice) ?></textarea>
 			<br>
@@ -23,7 +23,7 @@
 	<div id="tabs-2">
 		<p><?php echo esc_attr($order_detail) ?></p>
 		<br>
-		<iframe width="320" height="740" src="<?php echo esc_url("https://widget.fixedfloat.com/?from=BTC&to=BTCLN&lockSend=true&lockReceive=true&address=".$invoice."&lockAddress=true&type=float") ?>"></iframe>
+		<iframe width="360" height="740" src="<?php echo esc_url("https://widget.fixedfloat.com/?from=BTC&to=BTCLN&lockSend=true&lockReceive=true&address=".$invoice."&lockAddress=true&type=float") ?>"></iframe>
 	</div>
 
 
